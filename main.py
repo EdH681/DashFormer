@@ -43,7 +43,7 @@ class Player:
         sprite_height = self.rect.height
 
         if self.rect.bottom > max_height:
-            self.rect.y = max_height - self.rect.height
+            self.rect.y = max_height - sprite_height
 
     def __x_component(self):
 
@@ -85,6 +85,22 @@ class Player:
         self.__x_component()
         self.__display()
 
+class Platform:
+    def __init__(self, display, pos, repetitions):
+        self.__display = display
+        self.reps = repetitions
+        self.x, self.y = pos
+        self.sprite = pygame.image.load("assets/floor.png")
+
+    def __get_rect(self):
+        sprite_width = self.sprite.get_width()
+        hitbox_canvas = pygame.Surface()
+        rect = pygame.draw.rect(self.__display, "white", )
+
+    def display(self):
+        for i in range(self.reps):
+            sprite_width = self.sprite.get_width()
+            self.__display.blit(self.sprite, (self.x+(i*sprite_width), self.y))
 
 size = window_width, window_height = 900, 900
 pygame.init()
@@ -92,6 +108,7 @@ win = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 
 player = Player(win)
+ground = Platform(win, (200, 600), 10)
 
 # mainloop
 running = True
@@ -100,6 +117,7 @@ while running:
 
     win.fill("white")
     player.run()
+    ground.display()
     pygame.display.update()
 
     clock.tick(60)
